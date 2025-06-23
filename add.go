@@ -3,22 +3,21 @@ package main
 import (
 	"encoding/csv"
 	"errors"
-	"fmt"
 	"os"
 	"strconv"
 	"time"
 )
 
 func add(description string) {
-	id := getNextId()
-	timestamp := time.Now()
-	fmt.Println(timestamp)
-	record := []string{strconv.Itoa(id), description, timestamp.String(), "false"}
-
-	saveRecord(record)
+	var task Task
+	task.Id = getNextId()
+	task.Created = time.Now()
+	task.Task = description
+	task.Done = false
+	saveTask(task)
 }
 
-func saveRecord(record []string) {
+func saveTask(task Task) {
 	var file *os.File
 	var err error
 	var created bool = false
@@ -53,6 +52,7 @@ func saveRecord(record []string) {
 		}
 	}
 
+	record := []string{strconv.Itoa(task.Id), task.Task, task.Created.Format(time.RFC3339), strconv.FormatBool(task.Done)}
 	err = writer.Write(record)
 	if err != nil {
 		panic(err)
