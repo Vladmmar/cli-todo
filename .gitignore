@@ -1,0 +1,6 @@
+config.json
+tasks.csv
+
+*.exe
+
+.idea/
