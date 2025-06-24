@@ -13,7 +13,7 @@ func main() {
 func Run() {
 	args := os.Args
 	if len(args) <= 1 {
-		availableOptions()
+		help()
 	}
 	command := args[1]
 	switch command {

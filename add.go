@@ -19,7 +19,7 @@ func add(description string) {
 func saveTask(task Task) {
 	var file *os.File
 	var err error
-	file, err = os.OpenFile("tasks.csv", os.O_APPEND, 0644)
+	file, err = os.OpenFile("tasks.csv", os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
 		panic(err)
 	}

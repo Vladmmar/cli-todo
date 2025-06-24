@@ -8,7 +8,7 @@ import (
 )
 
 func complete(ids ...string) {
-	tasks, err := os.OpenFile("tasks.csv", os.O_CREATE, 0644)
+	tasks, err := os.OpenFile("tasks.csv", 0, 0644)
 	if err != nil {
 		panic(err)
 	}
