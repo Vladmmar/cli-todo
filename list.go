@@ -35,31 +35,30 @@ func list(extended bool) {
 			panic(err)
 		}
 
+		done, parseErr := strconv.ParseBool(record[3])
+
+		if parseErr == nil {
+			createdTime, timeErr := time.Parse(time.RFC3339, record[2])
+			if timeErr != nil {
+				panic(timeErr)
+			}
+			record[2] = toReadableTime(&createdTime)
+		}
+
 		if extended {
 			_, err = fmt.Fprintln(writer, strings.Join(record, "\t"))
 			if err != nil {
-				return
+				panic(err)
 			}
 		} else {
-			if done, parseErr := strconv.ParseBool(record[3]); parseErr == nil {
-				if !done {
-					createdTime, timeErr := time.Parse(time.RFC3339, record[2])
-					if timeErr != nil {
-						panic(timeErr)
-					}
-					record[2] = toReadableTime(&createdTime)
-					_, err = fmt.Fprintln(writer, strings.Join(record, "\t"))
-					if err != nil {
-						panic(err)
-					}
-				}
-			} else {
-				_, err = fmt.Fprintln(writer, strings.Join(record, "\t"))
+			if !done {
+				_, err = fmt.Fprintln(writer, strings.Join(record[:3], "\t"))
 				if err != nil {
 					panic(err)
 				}
 			}
 		}
 	}
+
 	writer.Flush()
 }

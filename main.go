@@ -6,8 +6,11 @@ import (
 )
 
 func main() {
-	loadConfig()
+	Initialize()
+	Run()
+}
 
+func Run() {
 	args := os.Args
 	if len(args) <= 1 {
 		availableOptions()

@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/csv"
-	"errors"
 	"os"
 	"strconv"
 	"time"
@@ -20,19 +19,9 @@ func add(description string) {
 func saveTask(task Task) {
 	var file *os.File
 	var err error
-	var created bool = false
-	if _, err = os.Stat("tasks.csv"); errors.Is(err, os.ErrNotExist) {
-		file, err = os.Create("tasks.csv")
-		created = true
-		if err != nil {
-			panic(err)
-		}
-
-	} else {
-		file, err = os.OpenFile("tasks.csv", os.O_APPEND, 0644)
-		if err != nil {
-			panic(err)
-		}
+	file, err = os.OpenFile("tasks.csv", os.O_APPEND, 0644)
+	if err != nil {
+		panic(err)
 	}
 
 	defer func(file *os.File) {
@@ -43,14 +32,6 @@ func saveTask(task Task) {
 	}(file)
 
 	writer := csv.NewWriter(file)
-
-	if created {
-		headers := []string{"ID", "Task", "Created", "Done"}
-		err := writer.Write(headers)
-		if err != nil {
-			panic(err)
-		}
-	}
 
 	record := []string{strconv.Itoa(task.Id), task.Task, task.Created.Format(time.RFC3339), strconv.FormatBool(task.Done)}
 	err = writer.Write(record)
