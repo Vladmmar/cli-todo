@@ -9,6 +9,8 @@ func help() {
 	helpText := `
 Todo List App - Command Line Usage
 
+todo COMMAND [options]
+
 Available Commands:
 
   add <task>                Add a new task to the list.
@@ -17,7 +19,7 @@ Available Commands:
   delete <id> [ids...]      Delete one or more tasks.
                             Example: delete 2 4 6
   list                      Show all incomplete tasks.
-  list -a, list --all       Show all tasks, including completed ones.
+  list [-a --all]           Show all tasks, including completed ones.
   help                      Show this help message.
 
 Notes:

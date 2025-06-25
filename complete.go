@@ -3,19 +3,20 @@ package main
 import (
 	"encoding/csv"
 	"os"
+	"path/filepath"
 	"slices"
 	"strconv"
 )
 
 func complete(ids ...string) {
-	tasks, err := os.OpenFile("tasks.csv", 0, 0644)
+	tasks, err := os.OpenFile(filepath.Join(appDataPath, "tasks.csv"), 0, 0644)
 	if err != nil {
 		panic(err)
 	}
 
 	reader := csv.NewReader(tasks)
 
-	newTasks, err := os.Create("_tasks.csv")
+	newTasks, err := os.Create(filepath.Join(appDataPath, "_tasks.csv"))
 	writer := csv.NewWriter(newTasks)
 	record, err := reader.Read()
 	if err != nil {
@@ -57,11 +58,11 @@ func complete(ids ...string) {
 		panic(err)
 	}
 
-	err = os.Remove("tasks.csv")
+	err = os.Remove(filepath.Join(appDataPath, "tasks.csv"))
 	if err != nil {
 		panic(err)
 	}
-	err = os.Rename("_tasks.csv", "tasks.csv")
+	err = os.Rename(filepath.Join(appDataPath, "_tasks.csv"), filepath.Join(appDataPath, "tasks.csv"))
 	if err != nil {
 		panic(err)
 	}

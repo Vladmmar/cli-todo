@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"errors"
 	"os"
+	"path/filepath"
 	"time"
 )
 
@@ -15,8 +16,8 @@ type Task struct {
 }
 
 func initTasks() {
-	if _, err := os.Stat("tasks.csv"); errors.Is(err, os.ErrNotExist) {
-		file, createErr := os.Create("tasks.csv")
+	if _, err := os.Stat(filepath.Join(appDataPath, "tasks.csv")); errors.Is(err, os.ErrNotExist) {
+		file, createErr := os.Create(filepath.Join(appDataPath, "tasks.csv"))
 		if createErr != nil {
 			panic(createErr)
 		}

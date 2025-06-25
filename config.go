@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"os"
+	"path/filepath"
 )
 
 type Config struct {
@@ -13,11 +14,10 @@ type Config struct {
 var config Config
 
 func loadConfig() {
-	if _, err := os.Stat("config.json"); errors.Is(err, os.ErrNotExist) {
-		config = Config{}
-		saveConfig()
+	if _, err := os.Stat(filepath.Join(appConfPath, "config.json")); errors.Is(err, os.ErrNotExist) {
+		initConf()
 	} else {
-		jsonData, err2 := os.ReadFile("config.json")
+		jsonData, err2 := os.ReadFile(filepath.Join(appConfPath, "config.json"))
 		if err2 != nil {
 			panic(err2)
 		}
@@ -34,7 +34,11 @@ func saveConfig() {
 	if err != nil {
 		panic(err)
 	}
-	file, err := os.Create("config.json")
+	err = os.MkdirAll(appConfPath, 0644)
+	if err != nil {
+		panic(err)
+	}
+	file, err := os.Create(filepath.Join(appConfPath, "config.json"))
 	if err != nil {
 		panic(err)
 	}

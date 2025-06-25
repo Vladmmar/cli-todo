@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	Initialize()
+	CheckHealth()
 	Run()
 }
 
@@ -48,5 +48,7 @@ func Run() {
 		} else {
 			del(args[2:]...)
 		}
+	default:
+		help()
 	}
 }

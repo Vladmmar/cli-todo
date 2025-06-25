@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"text/tabwriter"
@@ -11,7 +12,7 @@ import (
 )
 
 func list(extended bool) {
-	file, err := os.Open("tasks.csv")
+	file, err := os.Open(filepath.Join(appDataPath, "tasks.csv"))
 	if err != nil {
 		panic(err)
 	}
@@ -60,5 +61,8 @@ func list(extended bool) {
 		}
 	}
 
-	writer.Flush()
+	err = writer.Flush()
+	if err != nil {
+		panic(err)
+	}
 }
