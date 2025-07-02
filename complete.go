@@ -9,7 +9,7 @@ import (
 )
 
 func complete(ids ...string) {
-	tasks, err := os.OpenFile(filepath.Join(appDataPath, "tasks.csv"), 0, 0644)
+	tasks, err := os.OpenFile(filepath.Join(appDataPath, "tasks.csv"), 0, 0755)
 	if err != nil {
 		panic(err)
 	}

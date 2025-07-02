@@ -34,7 +34,7 @@ func saveConfig() {
 	if err != nil {
 		panic(err)
 	}
-	err = os.MkdirAll(appConfPath, 0644)
+	err = os.MkdirAll(appConfPath, 0755)
 	if err != nil {
 		panic(err)
 	}

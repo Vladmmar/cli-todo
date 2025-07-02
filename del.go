@@ -9,7 +9,7 @@ import (
 )
 
 func del(ids ...string) {
-	tasks, err := os.OpenFile(filepath.Join(appDataPath, "tasks.csv"), os.O_CREATE, 0644)
+	tasks, err := os.OpenFile(filepath.Join(appDataPath, "tasks.csv"), os.O_CREATE, 0755)
 	if err != nil {
 		panic(err)
 	}
